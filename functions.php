@@ -21,6 +21,24 @@ function error_db_info($stmt){
     exit("ErrorQuery:".$error[2]);
 }
 
+/*====================================================
+    SESSION チェック
+====================================================*/
+function chkSsid(){
+    if( !isset($_SESSION["chk_ssid"]) ||
+        $_SESSION["chk_ssid"] !=session_id() 
+        ){
+          exit("セッションがありません。");
+    }else{
+      session_regenerate_id(true);
+      $_SESSION["chk_ssid"] = session_id();
+    }
+  }
+
+
+
+
+
 // INTのbindValue
 function bvINT($stmt,$valueINT){
     $stmt->bindValue(":".$valueINT, $valueINT, PDO::PARAM_INT);
