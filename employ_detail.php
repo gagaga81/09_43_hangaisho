@@ -1,5 +1,7 @@
 <?php
+session_start();
 include("functions.php");
+chkSsid();
 // idを取得
 $id = $_GET["id"];
 

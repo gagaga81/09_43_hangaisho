@@ -2,43 +2,9 @@
 session_start();
 include("functions.php");
 chkSsid();
-// DB接続
-$pdo = db_con();
-
-
-// データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_an_table");
-$status = $stmt->execute();
-
-//　データ表示
-$view="";
-if($status==false){
-    $error = $stmt->errorInfo();
-    exit("ErrorQuery".$error[2]);
-
-}else{
-    while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $view .= "<tr><td>";
-        $view .= $result["employ_id"];
-        $view .= "</td><td>";
-        $view .= $result["employ_name"];
-        $view .= "</td><td>";
-        $view .= "<input type='number' name='work_days'>";
-        $view .= "</td><td>";
-        $view .= "<input type='number' name='work_time'>";
-        $view .= "</td><td>";
-        $view .= "<input type='text' name='work_memo'>";
-        $view .= "</td></tr>";
-        
-    }
-}
-
-
-
-
-
-
 ?>
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -53,7 +19,7 @@ if($status==false){
   <select name="year" id="month_select"></select>
 
 </form>
-<button>登録</button>
+<button>参照</button>
 
 <table>
     <tr>

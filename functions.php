@@ -28,7 +28,8 @@ function chkSsid(){
     if( !isset($_SESSION["chk_ssid"]) ||
         $_SESSION["chk_ssid"] !=session_id() 
         ){
-          exit("セッションがありません。");
+            // header("Location: login.php");
+          exit();
     }else{
       session_regenerate_id(true);
       $_SESSION["chk_ssid"] = session_id();

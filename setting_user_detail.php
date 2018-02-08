@@ -1,6 +1,8 @@
 <?php
+session_start();
 include("functions.php");
-// idを取得
+chkSsid();
+
 $id = $_GET["id"];
 
 // DB接続
@@ -31,7 +33,7 @@ $resetBTN = "<input type='button' value='reset' onClick='location.href=\"setting
 
 <!DOCTYPE html>
 <html lang="ja">
-<?php include"head.html" ?>
+<?php include"head.php" ?>
 
 <body>
 

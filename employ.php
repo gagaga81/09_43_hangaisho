@@ -1,11 +1,15 @@
+<?php
+session_start();
+include("functions.php");
+chkSsid();
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
 <?php 
-include("head.html");
-include("functions.php");
-
-// DB接続
+include("head.html");// DB接続
 $pdo = db_con();
 
 
@@ -57,7 +61,7 @@ if($status==false){
  ?>
 
 <body>
-    <?php include"header.html" ?>
+    <?php include"header.php" ?>
 <a href="javascript:imageup('employ_input.php');"><button>新規登録</button></a>
 <button>CSV出力</button>
 

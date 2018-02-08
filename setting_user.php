@@ -1,10 +1,14 @@
+<?php
+session_start();
+include("functions.php");
+chkSsid();
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
 <?php 
-include("head.html");
-include("functions.php");
-
+include("head.php");
 // DB接続
 $pdo = db_con();
 

@@ -3,21 +3,21 @@ session_start();
 //0.外部ファイル読み込み
 include("functions.php");
 
+$errorMessage="";
+
 if(isset($_POST["lid"])){
 
     $lid = $_POST["lid"];
     $lpw = $_POST["lpw"];
-
-    echo $lid.$lpw;
-
-
     $errorMessage="";
+
+    // echo $lid.$lpw;
 
     //1.  DB接続します
     $pdo = db_con();
 
     //2. データ登録SQL作成
-    $sql = "SELECT * FROM gs_user_table WHERE lid=:lid AND lpw=:lpw AND life_flg=0 ";
+    $sql = "SELECT * FROM gs_user_table WHERE lid=:lid AND lpw=:lpw ";
 
 
     $stmt = $pdo->prepare($sql);
@@ -33,19 +33,23 @@ if(isset($_POST["lid"])){
     $val = $stmt->fetch(); //1レコードだけ取得する方法
 
     //5. 該当レコードがあればSESSIONに値を代入
-    if( $val["id"] != "" ){
+  if( $val["id"] != "" ){
+    if($val["life_flg"]==1){
+      // 無効となっている場合は無効であるメッセージを出す
+      $errorMessage = "このアカウントは無効です";
+  
+    }else{
     $_SESSION["chk_ssid"]  = session_id();
     $_SESSION["kanri_flg"] = $val['kanri_flg'];
     $_SESSION["name"]      = $val['name'];
     header("Location: index.php");
-    }else{
-    //logout処理を経由して全画面へ
-    ?>
-    <div class="alert alert-danger" role="alert">ユーザーIDかパスワードに誤りがあります</div>
-    <?php
     }
 
-    exit();
+    }else{
+    //　IDかパスワードに誤りがある場合はそう表示する
+    $errorMessage = "ユーザーIDかパスワードに誤りがあります";
+    
+  }
 }
 ?>
 
@@ -65,7 +69,11 @@ if(isset($_POST["lid"])){
   <nav class="navbar navbar-default">LOGIN</nav>
 </header>
 
-<!-- lLOGINogin_act.php は認証処理用のPHPです。 -->
+<?php
+if($errorMessage){
+  echo h($errorMessage);}
+?>
+
 <form name="form1" action="" method="post">
 ID:<input type="text" name="lid" required />
 <br>
